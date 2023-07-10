@@ -1,2 +1,2 @@
-# pygame.platformer
-A platformer with sound effects made using pygame.
+# pygame.runner
+A runner with sound effects made using pygame.
