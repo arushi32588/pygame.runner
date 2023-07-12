@@ -32,6 +32,8 @@ while True:
     # draw all our elements
     screen.blit(ground_surface, (0,300)) # telling the system we want to place a ground on display surface
     screen.blit(sky_surface, (0,0)) # telling the system we want to place a sky on display surface
+    pygame.draw.rect(screen, 'Yellow', score_rect)
+    pygame.draw.rect(screen, 'Yellow', score_rect, 10)
     screen.blit(score_surf, score_rect)
     screen.blit(by_surf, by_rect)
     screen.blit(player_surf, player_rect)
