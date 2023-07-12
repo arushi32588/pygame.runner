@@ -17,8 +17,11 @@ player_rect = player_surf.get_rect(midbottom = (80, 300))
 snail_surf = pygame.image.load('graphics/Snail/snail1.png').convert_alpha()
 snail_rect = snail_surf.get_rect(midbottom = (700,300))
 
-text_surface1 = font1.render('Runner', False, 'Black')
-text_surface2 = font2.render('By Arushi', False, 'Black')
+score_surf = font1.render('Runner', False, 'Black')
+score_rect = score_surf.get_rect(center = (400, 50))
+
+by_surf = font2.render('By Arushi', False, 'Black')
+by_rect = by_surf.get_rect(center = (400, 80))
 
 while True:
     all_events = pygame.event.get()
@@ -29,8 +32,8 @@ while True:
     # draw all our elements
     screen.blit(ground_surface, (0,300)) # telling the system we want to place a ground on display surface
     screen.blit(sky_surface, (0,0)) # telling the system we want to place a sky on display surface
-    screen.blit(text_surface1, (325, 50))
-    screen.blit(text_surface2, (335, 80))
+    screen.blit(score_surf, score_rect)
+    screen.blit(by_surf, by_rect)
     screen.blit(player_surf, player_rect)
     screen.blit(snail_surf, snail_rect)
     snail_rect.left -= 4
