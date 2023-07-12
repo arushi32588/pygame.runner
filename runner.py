@@ -14,6 +14,9 @@ ground_surface = pygame.image.load('graphics/ground.jpeg').convert()
 player_surf = pygame.image.load('graphics/Player/walk1.png')
 player_rect = player_surf.get_rect(midbottom = (80, 300))
 
+snail_surf = pygame.image.load('graphics/Snail/snail1.png').convert_alpha()
+snail_rect = snail_surf.get_rect(midbottom = (700,300))
+
 text_surface1 = font1.render('Runner', False, 'Black')
 text_surface2 = font2.render('By Arushi', False, 'Black')
 
@@ -29,9 +32,12 @@ while True:
     screen.blit(text_surface1, (325, 50))
     screen.blit(text_surface2, (335, 80))
     screen.blit(player_surf, player_rect)
-
-
+    screen.blit(snail_surf, snail_rect)
+    snail_rect.left -= 4
+    if snail_rect.right <= 0:
+        snail_rect.left = 800
     # update everything
     pygame.display.update() # updates everything happening in the loop to display
     clock.tick(60) # telling the while loop it should not run more than 60 times/second
+
 
