@@ -1,11 +1,6 @@
 import pygame
 from sys import exit
 
-def display_score():
-    current_time = int(pygame.time.get_ticks()/1000) - start_time
-    score_surf = font1.render(f'SCORE: {current_time}', False, (64,64,64))
-    score_rect = score_surf.get_rect(center = (400,50))
-    screen.blit(score_surf, score_rect)
 pygame.init() #Initiates pygame
 screen = pygame.display.set_mode((800, 400)) 
 pygame.display.set_caption('Runner') #Naming the title of the window
@@ -59,7 +54,11 @@ while True:
         #pygame.draw.rect(screen, '#c0e8ec', score_rect, 10)
         #screen.blit(score_surf, score_rect)
         #screen.blit(by_surf, by_rect)
-        display_score()
+
+        current_time = int(pygame.time.get_ticks()/1000) - start_time
+        score_surf = font1.render(f'SCORE: {current_time}', False, (64,64,64))
+        score_rect = score_surf.get_rect(center = (400,50))
+        screen.blit(score_surf, score_rect)
         #Player
         #Gravity
         player_gravity+=1 
@@ -83,6 +82,25 @@ while True:
 
     # update everything
     pygame.display.update() # updates everything happening in the loop to display
-    clock.tick(60) # telling the while loop it should not run more than 60 times/second
-
+    #clock.tick(60) # telling the while loop it should not run more than 60 times/second
+    if current_time<= 10:
+        clock.tick(60)
+    elif current_time in range (10, 20):
+        clock.tick(80)
+    elif current_time in range (20, 30):
+        clock.tick(100)
+    elif current_time in range (30, 40):
+        clock.tick(120)
+    elif current_time in range (40, 50):
+        clock.tick(140)
+    elif current_time in range (50, 60):
+        clock.tick(160)
+    elif current_time in range (60, 70):
+        clock.tick(180)
+    elif current_time in range (70, 80):
+        clock.tick(200)
+    elif current_time in range (80, 90):
+        clock.tick(220)
+    else:
+        clock.tick(240)
 
