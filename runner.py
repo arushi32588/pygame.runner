@@ -14,6 +14,8 @@ ground_surface = pygame.image.load('graphics/ground.jpeg').convert()
 player_surf = pygame.image.load('graphics/Player/walk1.png')
 player_rect = player_surf.get_rect(midbottom = (80, 300))
 
+player_gravity = 0
+
 snail_surf = pygame.image.load('graphics/Snail/snail1.png').convert_alpha()
 snail_rect = snail_surf.get_rect(midbottom = (700,300))
 
@@ -29,13 +31,13 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             exit() #ends the while True loop so that it cannot continue to update and throw an error
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if player_rect.collidepoint(event.pos):
+                player_gravity = -20
     # draw all our elements
         if event.type == pygame.KEYDOWN:
-            print('key down')
-        
-        if event.type == pygame.KEYUP:
             if event.key == pygame.K_SPACE:
-                print('jump')
+                player_gravity = -20 
 
     screen.blit(ground_surface, (0,300)) # telling the system we want to place a ground on display surface
     screen.blit(sky_surface, (0,0)) # telling the system we want to place a sky on display surface
@@ -43,6 +45,12 @@ while True:
     pygame.draw.rect(screen, '#c0e8ec', score_rect, 10)
     screen.blit(score_surf, score_rect)
     screen.blit(by_surf, by_rect)
+
+    #Player
+
+    #Gravity
+    player_gravity+=1 
+    player_rect.y += player_gravity
     screen.blit(player_surf, player_rect)
     screen.blit(snail_surf, snail_rect)
     snail_rect.left -= 4
