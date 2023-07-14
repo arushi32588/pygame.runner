@@ -1,6 +1,7 @@
 import pygame
 from sys import exit
 
+
 pygame.init() #Initiates pygame
 screen = pygame.display.set_mode((800, 400)) 
 pygame.display.set_caption('Runner') #Naming the title of the window
@@ -10,19 +11,22 @@ font2 = pygame.font.Font('font/Pixeltype.ttf', 70)
 game_active = -1
 start_time = 0
 score = 0
-
 sky_surface = pygame.image.load('graphics/Sky.jpeg').convert()
 ground_surface = pygame.image.load('graphics/Ground.jpeg').convert()
 
 player_surf = pygame.image.load('graphics/Player/walk1.png')
 player_rect = player_surf.get_rect(midbottom = (80, 300))
 
+player_stand = pygame.image.load('graphics/Player/stand.png')
+player_stand = pygame.transform.rotozoom(player_stand, 0, 2)
+player_stand_rect = player_stand.get_rect(center = (400, 200))
+
 player_gravity = 0
 
 snail_surf = pygame.image.load('graphics/Snail/snail1.png').convert_alpha()
 snail_rect = snail_surf.get_rect(midbottom = (700,300))
 
-welcome_1 = font2.render('Welcome to the Runner', False, 'Yellow')
+welcome_1 = font2.render("Hi! I'm the Pixel Runner", False, 'Yellow')
 welcome_1_rect = welcome_1.get_rect(center = (400, 50))
 
 welcome_2 = font1.render("PRESS 'ENTER' to start the game", True, 'White')
@@ -33,6 +37,7 @@ game_over_rect = game_over.get_rect(center =(400, 50))
 
 leaderboard = font1.render('LEADERBOARD', False, 'Yellow')
 leaderboard_rect = leaderboard.get_rect(center = (400, 90))
+
 
 #score_surf = font1.render('Runner', False, (64, 64, 64))
 #score_rect = score_surf.get_rect(center = (400, 50))
@@ -113,12 +118,16 @@ while True:
         
     elif game_active == -1:
         screen.fill('Black')
+        screen.blit(player_stand, player_stand_rect)
         screen.blit(welcome_1, welcome_1_rect)
         screen.blit(welcome_2, welcome_2_rect)
     else:
         screen.fill('Black')
         screen.blit(game_over, game_over_rect)
         screen.blit(leaderboard, leaderboard_rect)
+        player_score = font1.render(f'Your score: {current_time}', False, 'White')
+        player_score_rect = player_score.get_rect(center = (400, 350))
+        screen.blit(player_score, player_score_rect)
 
 
     '''keys = pygame.key.get_pressed()
