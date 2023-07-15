@@ -53,6 +53,8 @@ while True:
             exit() #ends the while True loop so that it cannot continue to update and throw an error
         if game_active == -1:
             if event.type == pygame.KEYDOWN and pygame.K_RETURN:
+                snail_rect.left = 700
+                start_time = int(pygame.time.get_ticks()/1000)
                 game_active = 1
         if game_active == 1:
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -65,21 +67,25 @@ while True:
         elif game_active == 2:
             if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                 game_active = -1
-                snail_rect.left = 700
-                start_time = int(pygame.time.get_ticks()/1000)
+    
+    if game_active == -1:
+        screen.fill('Black')
+        screen.blit(player_stand, player_stand_rect)
+        screen.blit(welcome_1, welcome_1_rect)
+        screen.blit(welcome_2, welcome_2_rect)
 
-    if game_active == 1:
+    elif game_active == 1:
         screen.blit(ground_surface, (0,300)) # telling the system we want to place a ground on display surface
         screen.blit(sky_surface, (0,0)) # telling the system we want to place a sky on display surface
+        current_time = int(pygame.time.get_ticks() / 1000) - start_time
+        game_time = current_time
+        score_surf = font1.render(f'SCORE: {current_time}', False, (64, 64, 64))
+        score_rect = score_surf.get_rect(center=(400, 50))
+        screen.blit(score_surf, score_rect)
         #pygame.draw.rect(screen, '#c0e8ec', score_rect)
         #pygame.draw.rect(screen, '#c0e8ec', score_rect, 10)
         #screen.blit(score_surf, score_rect)
         #screen.blit(by_surf, by_rect)
-
-        current_time = int(pygame.time.get_ticks()/1000) - start_time
-        score_surf = font1.render(f'SCORE: {current_time}', False, (64,64,64))
-        score_rect = score_surf.get_rect(center = (400,50))
-        screen.blit(score_surf, score_rect)
         #Player
         #Gravity
         player_gravity+=1 
@@ -114,19 +120,14 @@ while True:
         #Collision
         if snail_rect.colliderect(player_rect) == 1:
             game_active = 2
-            score += score
-        
-    elif game_active == -1:
-        screen.fill('Black')
-        screen.blit(player_stand, player_stand_rect)
-        screen.blit(welcome_1, welcome_1_rect)
-        screen.blit(welcome_2, welcome_2_rect)
+
     else:
         screen.fill('Black')
         screen.blit(game_over, game_over_rect)
         screen.blit(leaderboard, leaderboard_rect)
-        player_score = font1.render(f'Your score: {current_time}', False, 'White')
-        player_score_rect = player_score.get_rect(center = (400, 350))
+        final_score = game_time
+        player_score = font1.render(f'Your score: {final_score}', False, 'White')
+        player_score_rect = player_score.get_rect(center=(400, 350))
         screen.blit(player_score, player_score_rect)
 
 
