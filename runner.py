@@ -1,5 +1,6 @@
 import pygame
 from sys import exit
+from random import randint
 
 
 pygame.init() #Initiates pygame
@@ -23,8 +24,36 @@ player_stand_rect = player_stand.get_rect(center = (400, 200))
 
 player_gravity = 0
 
+#Obstacles
 snail_surf = pygame.image.load('graphics/Snail/snail1.png').convert_alpha()
-snail_rect = snail_surf.get_rect(midbottom = (700,300))
+
+fly_surf = pygame.image.load('graphics/Fly/Fly3.png').convert_alpha()
+fly_surf = pygame.transform.scale(fly_surf, (100, 50))
+
+obstacle_rect_list = []
+
+def obstacle_movement(obstacle_list):
+    if obstacle_list != []:
+        for i in obstacle_list:
+            i.x -= 5
+            
+            if i.bottom == 300:
+                screen.blit(snail_surf, i)
+            else:
+                screen.blit(fly_surf, i)
+        
+        obstacle_list = [obstacle for obstacle in obstacle_list if obstacle.x > -100]
+
+        return obstacle_list
+    else: return []
+
+'''def collisions(player, obstacles):
+    if obstacles:
+        for j in obstacles:
+            if player.colliderect(j):
+                return 2
+    return 1'''
+
 
 welcome_1 = font2.render("Hi! I'm the Pixel Runner", False, 'Yellow')
 welcome_1_rect = welcome_1.get_rect(center = (400, 50))
@@ -37,6 +66,10 @@ game_over_rect = game_over.get_rect(center =(400, 50))
 
 leaderboard = font1.render('LEADERBOARD', False, 'Yellow')
 leaderboard_rect = leaderboard.get_rect(center = (400, 90))
+
+#Timer
+obstacle_timer = pygame.USEREVENT + 1
+pygame.time.set_timer(obstacle_timer, 1500)
 
 
 #score_surf = font1.render('Runner', False, (64, 64, 64))
@@ -53,7 +86,6 @@ while True:
             exit() #ends the while True loop so that it cannot continue to update and throw an error
         if game_active == -1:
             if event.type == pygame.KEYDOWN and pygame.K_RETURN:
-                snail_rect.left = 700
                 start_time = int(pygame.time.get_ticks()/1000)
                 game_active = 1
         if game_active == 1:
@@ -67,7 +99,11 @@ while True:
         elif game_active == 2:
             if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                 game_active = -1
-    
+        if event.type == obstacle_timer and game_active == 1:
+            if randint(0, 2) == 1:
+                obstacle_rect_list.append(snail_surf.get_rect(midbottom = (randint(900, 1100) ,300)))
+            else:
+                obstacle_rect_list.append(snail_surf.get_rect(midbottom = (randint(900, 1100) ,220)))
     if game_active == -1:
         screen.fill('Black')
         screen.blit(player_stand, player_stand_rect)
@@ -93,10 +129,17 @@ while True:
         if player_rect.bottom >= 300:
             player_rect.bottom = 300
         screen.blit(player_surf, player_rect)
-        screen.blit(snail_surf, snail_rect)
-        snail_rect.left -= 4
+
+        #Obstacle movement
+        obstacle_rect_list = obstacle_movement(obstacle_rect_list)
+        for j in obstacle_rect_list:
+                if player_rect.colliderect(j):
+                    game_active = 2 
+
+        #screen.blit(snail_surf, snail_rect)
+        '''snail_rect.left -= 4
         if snail_rect.right <= 0:
-            snail_rect.left = 800
+            snail_rect.left = 800'''
         if current_time<= 10:
             clock.tick(60)
         elif current_time in range (10, 20):
@@ -118,8 +161,8 @@ while True:
         else:
             clock.tick(240)
         #Collision
-        if snail_rect.colliderect(player_rect) == 1:
-            game_active = 2
+        '''if snail_rect.colliderect(player_rect) == 1:
+            game_active = 2'''
 
     else:
         screen.fill('Black')
@@ -129,6 +172,9 @@ while True:
         player_score = font1.render(f'Your score: {final_score}', False, 'White')
         player_score_rect = player_score.get_rect(center=(400, 350))
         screen.blit(player_score, player_score_rect)
+        obstacle_rect_list.clear()
+        player_rect.midbottom = (80, 300)
+        player_gravity = 0
 
 
     '''keys = pygame.key.get_pressed()
