@@ -15,8 +15,15 @@ score = 0
 sky_surface = pygame.image.load('graphics/Sky.jpeg').convert()
 ground_surface = pygame.image.load('graphics/Ground.jpeg').convert()
 
-player_surf = pygame.image.load('graphics/Player/walk1.png')
+player_walk1 = pygame.image.load('graphics/Player/walk1.png').convert_alpha()
+player_walk2 = pygame.image.load('graphics/Player/walk2.png').convert_alpha()
+player_walk = [player_walk1, player_walk2]
+player_jump = pygame.image.load('graphics/Player/jump.png').convert_alpha()
+player_index = 0
+
+player_surf = player_walk[player_index]
 player_rect = player_surf.get_rect(midbottom = (80, 300))
+
 
 player_stand = pygame.image.load('graphics/Player/stand.png')
 player_stand = pygame.transform.rotozoom(player_stand, 0, 2)
@@ -25,7 +32,6 @@ player_stand_rect = player_stand.get_rect(center = (400, 200))
 player_gravity = 0
 
 #Obstacles
-snail_surf = pygame.image.load('graphics/Snail/snail1.png').convert_alpha()
 
 fly_surf = pygame.image.load('graphics/Fly/Fly3.png').convert_alpha()
 fly_surf = pygame.transform.scale(fly_surf, (100, 50))
@@ -129,6 +135,15 @@ while True:
         if player_rect.bottom >= 300:
             player_rect.bottom = 300
         screen.blit(player_surf, player_rect)
+
+        #player animation
+        if player_rect.bottom < 300:
+            player_surf = player_jump
+        else:
+            player_index += 0.1
+            if player_index >= len(player_walk):
+                player_index = 0
+            player_surf = player_walk[int(player_index)]
 
         #Obstacle movement
         obstacle_rect_list = obstacle_movement(obstacle_rect_list)
