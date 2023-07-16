@@ -164,10 +164,6 @@ welcome_3_rect = welcome_2.get_rect(center = (400, 350) )
 game_over = font2.render('Game over', False, 'Red')
 game_over_rect = game_over.get_rect(center =(400, 50))
 
-
-leaderboard = font1.render('LEADERBOARD', False, 'Yellow')
-leaderboard_rect = leaderboard.get_rect(center = (400, 90))
-
 #Timer
 obstacle_timer = pygame.USEREVENT + 1
 pygame.time.set_timer(obstacle_timer, 1500)
@@ -283,13 +279,9 @@ while True:
     else:
         screen.fill('Black')
         screen.blit(game_over, game_over_rect)
-        screen.blit(leaderboard, leaderboard_rect)
         final_score = game_time
         player_score = font1.render(f'Your score: {final_score}', False, 'White')
         player_score_rect = player_score.get_rect(center=(400, 350))
-        leaderboard = font3.render(f'{players}         {final_score}', False, 'Yellow')
-        leaderboard_rect = leaderboard.get_rect(center = (400, 90))
-        screen.blit(leaderboard, leaderboard_rect)
         screen.blit(player_score, player_score_rect)
         player_rect.midbottom = (80, 300)
         player_gravity = 0
