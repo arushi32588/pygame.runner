@@ -104,7 +104,7 @@ game_active = -1
 start_time = 0
 score = 0
 
-background_music = pygame.mixer.Sound('audio/Your-Story.mp3')
+background_music = pygame.mixer.Sound('audio/game_music.mp3')
 background_music.play(loops = -1)
 
 sky_surface = pygame.image.load('graphics/Sky.jpeg').convert()
@@ -154,8 +154,11 @@ fly_surf = fly_frames[fly_frame_index]
 welcome_1 = font2.render("Hi! I'm the Pixel Runner", False, 'Yellow')
 welcome_1_rect = welcome_1.get_rect(center = (400, 50))
 
-welcome_2 = font1.render("PRESS 'ENTER' to start the game", True, 'White')
+welcome_2 = font1.render("Press 'ENTER' to start the game", True, 'White')
 welcome_2_rect = welcome_2.get_rect(center = (400, 90) )
+
+welcome_3 = font1.render("Press 'SPACE' to jump the obstacles", True, 'White')
+welcome_3_rect = welcome_2.get_rect(center = (400, 350) )
 
 game_over = font2.render('Game over', False, 'Red')
 game_over_rect = game_over.get_rect(center =(400, 50))
@@ -222,6 +225,7 @@ while True:
         screen.blit(player_stand, player_stand_rect)
         screen.blit(welcome_1, welcome_1_rect)
         screen.blit(welcome_2, welcome_2_rect)
+        screen.blit(welcome_3, welcome_3_rect)
 
     elif game_active == 1:
         screen.blit(ground_surface, (0,300)) # telling the system we want to place a ground on display surface
