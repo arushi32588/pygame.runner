@@ -2,6 +2,7 @@ import pygame
 from sys import exit
 from random import randint, choice
 
+
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
@@ -286,8 +287,9 @@ while True:
         final_score = game_time
         player_score = font1.render(f'Your score: {final_score}', False, 'White')
         player_score_rect = player_score.get_rect(center=(400, 350))
-        #leaderboard = font3.render(f'{}         {final_score}', False, 'Yellow')
-        #leaderboard_rect = leaderboard.get_rect(center = (400, 90))
+        leaderboard = font3.render(f'{players}         {final_score}', False, 'Yellow')
+        leaderboard_rect = leaderboard.get_rect(center = (400, 90))
+        screen.blit(leaderboard, leaderboard_rect)
         screen.blit(player_score, player_score_rect)
         player_rect.midbottom = (80, 300)
         player_gravity = 0
